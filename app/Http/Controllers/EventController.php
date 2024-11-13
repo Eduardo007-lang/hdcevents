@@ -26,6 +26,7 @@ class EventController extends Controller
         $events->location = $request->location;
         $events->private = $request->private;
         $events->description = $request->description;
+        $events->items = $request->items;
 
         //image upload
 

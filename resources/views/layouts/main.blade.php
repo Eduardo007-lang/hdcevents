@@ -43,9 +43,9 @@
       <main>
         <div class="container-fluid">
           <div class="row">
-            @session('msg')
+            @if(session('msg'))
               <p class="msg">{{ session('msg') }}</p>
-            @endsession
+            @endif
             @yield('content')
           </div>
         </div>
