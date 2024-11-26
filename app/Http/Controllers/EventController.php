@@ -4,13 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
     public function index()
     {
-       $events = Event::all();
-        return view('welcome', compact('events'));
+
+        $search = request('search');
+
+        //Buscar os eventos com base na pesquisa(search)
+        if($search){    
+            $events = Event::where([
+                ['title', 'like', '%'.$search.'%']
+            ])->get();
+
+
+        } else {
+            $events = Event::all();
+        }
+
+        return view('welcome', compact('events', 'search'));
     }
 
     public function create()
@@ -24,6 +38,7 @@ class EventController extends Controller
         $events = new Event;
         $events->title = $request->title;
         $events->location = $request->location;
+        $events->date = $request->date;
         $events->private = $request->private;
         $events->description = $request->description;
         $events->items = $request->items;
@@ -47,11 +62,15 @@ class EventController extends Controller
             $events->image = $imageName;
 
         }   
+        
+        $user = Auth::user();
+        $events->user_id = $user->id;
 
         $events->save();
 
         return redirect('/')->with('msg', 'Evento criado com sucesso!');
     }
+
 
     public function show($id)
     {
