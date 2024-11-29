@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,7 +75,30 @@ class EventController extends Controller
 
     public function show($id)
     {
+
         $event = Event::findOrFail($id);
-        return view('events.show', compact('event'));
+
+        $eventOwner = User::where('id', $event->user_id)->first()->toArray();
+
+        return view('events.show', compact('event', 'eventOwner'));
+    }
+
+    public function destroy($id)
+    {
+     
+        Event::findOrFail($id)->delete();
+
+        return redirect('/dashboard')->with('msg', 'Evento deletado com sucesso!');
+
+    }
+
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+
+        $events = $user->events;
+
+        return view('dashboard', compact('events'));
     }
 }

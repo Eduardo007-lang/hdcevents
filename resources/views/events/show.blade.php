@@ -13,7 +13,7 @@
             <h1>{{ $event->title }}</h1>
             <p class="event-local"><ion-icon name="location-outline"></ion-icon> {{ $event->location }}</p>
             <p class="events-participants"><ion-icon name="people-outline"></ion-icon>X Participantes</p>
-            <p class="event-ower"><ion-icon name="star-outline"></ion-icon> Dono do Evento: </p>
+            <p class="event-ower"><ion-icon name="star-outline"></ion-icon> Dono do Evento: {{ $eventOwner['name'] }} </p>
             <a href="#" class="btn btn-primary" id="event-submit" rel="noopener noreferrer">Confirmar Presenca</a>
             <h3>Infraestrutura:</h3>
             <ul id="items-list">
@@ -22,7 +22,7 @@
                 @endforeach
             </ul>
         </div>
-        <div class="col-md-12" id="description-container">
+        <div class="col-md-12 mt-5" id="description-container">
             <h3>Sobre o evento: </h3>
             <p class="event-description">{{ $event->description }}</p>
         </div>
