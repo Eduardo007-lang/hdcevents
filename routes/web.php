@@ -21,5 +21,6 @@ Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show'
 Route::post('/events', [EventController::class, 'store']);
 Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware('auth');
 Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.delete');
+Route::post('/events/join/{id}', [EventController::class, 'joinEvent'])->middleware('auth');
 
 

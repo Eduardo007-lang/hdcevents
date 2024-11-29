@@ -97,8 +97,27 @@ class EventController extends Controller
     {
         $user = Auth::user();
 
+        
+
         $events = $user->events;
 
         return view('dashboard', compact('events'));
+    }
+
+    public function joinEvent($id)
+    {
+
+        $user = Auth::user();
+
+        $event = Event::findOrFail($id);
+
+        if (!$user->eventsAsParticipant()->find($id)) {
+            $user->eventsAsParticipant()->attach($id);
+            return redirect('/dashboard')->with('msg', 'Você se inscreveu no evento '.$event->title.' com sucesso!');
+        }
+
+
+        return redirect('/dashboard')->with('msg', 'Você já se inscreveu no evento!');
+        
     }
 }
